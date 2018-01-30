@@ -34,7 +34,7 @@ const std::string Request::getTimestamp() {
 	return "NULL";
 }
 
-// Trading instrument getter as a string (stock id in our example)
+// Trading instrument getter as a string (stock name in our example)
 // Return "NULL" if an exception/error/cancellation occurs
 const std::string Request::getInstrument() {
 	if (Request::rdata != nullptr)
@@ -82,7 +82,7 @@ const Request::DataTuple Request::getData() {
 //*** AutoRequest class implementation ***//
 
 // Parameter constructor implementation (No need for default constructor, since "default" trades are not defined)
-// Takes Request data as input and instantiates a new request.
+// Takes Request data as input and instantiates a new request dynamically
 AutoRequest::AutoRequest(std::string side, std::string instrument, double price, long quantity) {
 	Request::rdata = new RequestData();
 	
@@ -125,8 +125,7 @@ AutoRequest::~AutoRequest() {
 
 // ManualRequest Default constructor will instantiate RequestData on the heap, call an init()
 // method that will allow the user SAFELY to select the wanted request values, and if no
-// errors/exceptions/etc. occur, then the constructor will proceed to get the timestamp of the
-// trade and its ID
+// errors/exceptions/etc. occur, then the constructor will proceed to get the timestamp 
 ManualRequest::ManualRequest() {
 	Request::rdata = new RequestData();
 
