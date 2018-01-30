@@ -1,0 +1,2 @@
+# Exchange-Maching-Engine-Emulation
+This project implements an elementary version of a maching engine in a stock market exchange. It uses data structures and algorithms to describe an efficient system that handles asynchronous BUY and SELL requests from buyers and sellers on a pool of instruments. The system fills the requests or keeps them pending as per the availability, and keeps track of all transactions and their timestamp.
