@@ -1,5 +1,5 @@
 /*
-*	© Superharmonic Technologies
+*	Â© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -32,13 +32,13 @@ AutoRequest::AutoRequest(std::string side, std::string instrument, double price,
 	
 	// Key data
 	Request::rdata->m_instrument	= instrument;
-	Request::rdata->m_quantity		= quantity;
-	Request::rdata->m_price			= price;
-	Request::rdata->m_side			= side;
+	Request::rdata->m_quantity	= quantity;
+	Request::rdata->m_price		= price;
+	Request::rdata->m_side		= side;
 	
 	// Timestamp
-	std::time_t t				= std::time(nullptr);
-	Request::rdata->m_timestamp = *std::localtime(&t);	
+	std::time_t t			= std::time(nullptr);
+	Request::rdata->m_timestamp     = *std::localtime(&t);	
 }
 
 // Setting trade ID upon submission
@@ -50,12 +50,12 @@ void AutoRequest::setId() {
 // Prints appropriate error message in case rdata is uninitialized
 void AutoRequest::printRequestInfo() const {
 	if (rdata != nullptr)
-		std::cout << "* NEW AUTO REQUEST: "
-		<< rdata->m_side << ", "
-		<< rdata->m_instrument << ", $"
-		<< rdata->m_price << ", "
-		<< rdata->m_quantity << ", "
-		<< getTimestamp() << "\n";
+		std::cout 	<< "* NEW AUTO REQUEST: "
+				<< rdata->m_side 	<< ", "
+				<< rdata->m_instrument 	<< ", $"
+				<< rdata->m_price 	<< ", "
+				<< rdata->m_quantity 	<< ", "
+				<< getTimestamp() 	<< "\n";
 	else std::cout << "Nothing to print!";
 }
 
@@ -137,7 +137,7 @@ ManualRequest::ManualRequest() {
 	// If no errors when init
 	if (Request::rdata != nullptr) {
 		// Timestamp
-		std::time_t t				= std::time(nullptr);
+		std::time_t t		    = std::time(nullptr);
 		Request::rdata->m_timestamp = *std::localtime(&t);
 	}	
 }
@@ -151,12 +151,12 @@ void ManualRequest::setId() {
 // Prints appropriate error message in case rdata is uninitialized
 void ManualRequest::printRequestInfo() const {
 	if (rdata != nullptr)
-		std::cout << "* NEW MANUAL REQUEST: "
-		<< rdata->m_side << ", "
-		<< rdata->m_instrument << ", $"
-		<< rdata->m_price << ", "
-		<< rdata->m_quantity << ", "
-		<< getTimestamp() << "\n";
+		std::cout 	<< "* NEW MANUAL REQUEST: "
+				<< rdata->m_side 	<< ", "
+				<< rdata->m_instrument 	<< ", $"
+				<< rdata->m_price 	<< ", "
+				<< rdata->m_quantity 	<< ", "
+				<< getTimestamp() 	<< "\n";
 	else std::cout << "Nothing to print!";
 }
 
@@ -215,7 +215,6 @@ void ManualRequest::init() {
 		//	When a false input or error occurs, cancel the transaction, handle the allocated
 		//	RequestData memory and set the 'rdata' pointer to nullptr, and return.
 		//	Concequently the destructor won't deallocate again, so it's safe.
-	
 	
 	//*** Select trade side
 	std::cout << "Do you want to BUY or to SELL?\n";
@@ -322,7 +321,6 @@ void ManualRequest::init() {
 			delete Request::rdata;
 			Request::rdata = nullptr;
 		}
-		
 		// Good bye!
 		std::cout << "Request Cancelled! Try again!\n";
 		return;
