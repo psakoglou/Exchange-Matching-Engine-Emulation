@@ -71,16 +71,18 @@ int main() {
 	//*** Sort per price
 	// Lambda O(n^2) sorting as per highest price (for demo only)
 	auto myN2PriceSort = [&]()->void {
-		if (submitted.empty() || submitted.size() == 1) return;
+		
+		std::size_t size = submitted.size();
+		if (size < 2) return;
 
 		unsigned i = 0;
-		for (; i < submitted.size(); ++i) {
+		for (; i < size; ++i) {
 
 			double max_price = submitted[i]->getPrice();
 			int max_index = i;
 
 			unsigned j = i + 1;
-			for (; j < submitted.size(); ++j) {
+			for (; j < size; ++j) {
 				if (max_price < submitted[j]->getPrice()) {
 					max_price = submitted[j]->getPrice();
 					max_index = j;
