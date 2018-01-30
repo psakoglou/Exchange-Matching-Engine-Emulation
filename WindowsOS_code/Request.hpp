@@ -1,5 +1,5 @@
 /*
-*	© Superharmonic Technologies
+*	Â© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -17,9 +17,9 @@
 // Necessary Standard Lib dependencies
 // Make sure they work under the production OS
 #include <iostream>
-#include <chrono>		// System clock etc.: http://en.cppreference.com/w/cpp/chrono
+#include <chrono>	// System clock etc.: http://en.cppreference.com/w/cpp/chrono
 #include <ctime>
-#include <iomanip>		// std::put_time, to convert timestamp to string: http://en.cppreference.com/w/cpp/header/iomanip
+#include <iomanip>	// std::put_time, to convert timestamp to string: http://en.cppreference.com/w/cpp/header/iomanip
 #include <string>
 #include <sstream>
 #include <tuple>
@@ -31,10 +31,10 @@
 // and intuitive structuring of the parameters
 struct RequestData {
 	std::tm		m_timestamp;	// Timestamp of Request creation
-	std::string m_instrument;	// Underlying Instrument
-	std::string m_side;			// Trade side (BUY/SELL)
-	long		m_quantity;		// Trade quantity
-	double		m_price;		// Trade price
+	std::string 	m_instrument;	// Underlying Instrument
+	std::string 	m_side;		// Trade side (BUY/SELL)
+	long		m_quantity;	// Trade quantity
+	double		m_price;	// Trade price
 };
 
 //=========================================================================================
@@ -58,10 +58,10 @@ public:
 	// C++11 version of typedef (alias)
 	using DataTuple = std::tuple<std::string, std::string, double, long, std::string>;
 
-	virtual void				printRequestInfo() = 0;
+	virtual void			printRequestInfo() = 0;
 	virtual const std::string	getInstrument();
 	virtual const std::string	getTimestamp();
-	virtual const long			getQuantity();
+	virtual const long		getQuantity();
 	virtual const double		getPrice();
 	virtual const std::string	getSide();	
 	virtual const DataTuple		getData();
