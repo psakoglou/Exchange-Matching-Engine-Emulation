@@ -6,5 +6,6 @@ This project implements an elementary version of a matching engine in a stock ma
 
 ## Trade Request interface
 
+![Data-Flow](/img/RequestUML.jpg)
 
 ## TBD
