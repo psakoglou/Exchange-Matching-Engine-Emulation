@@ -68,7 +68,6 @@ public:
 
 protected:
 	RequestData * rdata;
-	long long id;
 private:
 	// No copies of trade requests for security reasons or runtime bugs
 	Request(const Request &);
