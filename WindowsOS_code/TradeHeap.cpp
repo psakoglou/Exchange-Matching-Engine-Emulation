@@ -78,7 +78,7 @@ bool TradeHeap::empty() {
 
 // Expand method re-allocates memory dynamically as per 
 // the underlying rule
-void TradeHeap::expand(TradeHeap & bh) {
+void TradeHeap::expand() {
 	TradeHeap temp(*this);
 	m_size += m_size / 3;
 	delete m_trades;
@@ -90,7 +90,7 @@ void TradeHeap::expand(TradeHeap & bh) {
 
 // Shrink method re-allocates memory dynamically as per 
 // the underlying rule
-void TradeHeap::shrink(TradeHeap & bh) {
+void TradeHeap::shrink() {
 	if (m_size <= default_size) return;
 	TradeHeap temp(*this);
 	m_size = (m_size <= default_size) ? default_size : (2 * m_size / 3);

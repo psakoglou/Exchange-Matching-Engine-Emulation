@@ -110,7 +110,7 @@ public:
 		// we resize (shrink the heap) dynamically when the number of 
 		// elements is equal or less than half of the current capacity of the heap
 		if ((double)m_index <= 0.5 * (double)m_size)
-			shrink(*this);
+			shrink();
 		return temp;
 	}
 
@@ -133,7 +133,7 @@ public:
 		// we resize (expand the heap) dynamically when the number of 
 		// elements is equal or greater than 80% of the current capacity of the heap
 		if ((double)m_index >= 0.8 * (double)m_size) 
-			expand(*this);
+			expand();
 		
 		// Store input price locally to avoid repeated calls that would drop performance
 		double input_price = trn.request->getPrice();
@@ -187,8 +187,8 @@ private:
 	// Private methods to resize the heap. Only methods of the class are allow to 
 	// perform such operations since they are expensive to perform and should be
 	// only used when and if necessary
-	void expand(TradeHeap & bh);
-	void shrink(TradeHeap & bh);
+	void expand();
+	void shrink();
 
 	// To avoid security loopholes, we set the assignment operator as private
 	TradeHeap& operator=(const TradeHeap & th);

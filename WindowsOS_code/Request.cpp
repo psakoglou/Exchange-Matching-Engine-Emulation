@@ -1,5 +1,5 @@
 /*
-*	Â© Superharmonic Technologies
+*	© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -42,7 +42,7 @@ const std::string Request::getInstrument() {
 	return "NULL";
 }
 
-// Trade side getter as a string
+// Trade side (BUY/SELL) getter as a string
 // Return "NULL" if an exception/error/cancellation occurs
 const std::string Request::getSide() {
 	if (Request::rdata != nullptr)
@@ -82,19 +82,19 @@ const Request::DataTuple Request::getData() {
 //*** AutoRequest class implementation ***//
 
 // Parameter constructor implementation (No need for default constructor, since "default" trades are not defined)
-// Takes Request data as input and instantiates a new request dynamically
+// Takes Request data as input and instantiates a new request dynamically.
 AutoRequest::AutoRequest(std::string side, std::string instrument, double price, long quantity) {
 	Request::rdata = new RequestData();
 	
 	// Key data
 	Request::rdata->m_instrument	= instrument;
-	Request::rdata->m_quantity	= quantity;
-	Request::rdata->m_price		= price;
-	Request::rdata->m_side		= side;
+	Request::rdata->m_quantity		= quantity;
+	Request::rdata->m_price			= price;
+	Request::rdata->m_side			= side;
 	
 	// Timestamp
-	std::time_t t		    	= std::time(nullptr);
-	Request::rdata->m_timestamp 	= *std::localtime(&t);	
+	std::time_t t				= std::time(nullptr);
+	Request::rdata->m_timestamp = *std::localtime(&t);	
 }
 
 
@@ -102,14 +102,15 @@ AutoRequest::AutoRequest(std::string side, std::string instrument, double price,
 // Prints appropriate error message in case rdata is uninitialized
 void AutoRequest::printRequestInfo() {
 	if (rdata != nullptr)
-		std::cout 	<< "* NEW AUTO REQUEST: "
-				<< rdata->m_side 	<< ", "
-				<< rdata->m_instrument 	<< ", $"
-				<< rdata->m_price 	<< ", "
-				<< rdata->m_quantity 	<< ", "
-				<< getTimestamp() 	<< "\n";
+		std::cout << "* NEW AUTO REQUEST: "
+		<< rdata->m_side << ", "
+		<< rdata->m_instrument << ", $"
+		<< rdata->m_price << ", "
+		<< rdata->m_quantity << ", "
+		<< getTimestamp();
 	else std::cout << "Nothing to print!";
 }
+
 
 // Destructor of AutoRequest derived class
 // Enforced garbage collection bellow, that de-allocates the DataRequest 
@@ -125,7 +126,7 @@ AutoRequest::~AutoRequest() {
 
 // ManualRequest Default constructor will instantiate RequestData on the heap, call an init()
 // method that will allow the user SAFELY to select the wanted request values, and if no
-// errors/exceptions/etc. occur, then the constructor will proceed to get the timestamp 
+// errors/exceptions/etc. occur, then the constructor will proceed to get the timestamp
 ManualRequest::ManualRequest() {
 	Request::rdata = new RequestData();
 
@@ -135,7 +136,7 @@ ManualRequest::ManualRequest() {
 	// If no errors when init
 	if (Request::rdata != nullptr) {
 		// Timestamp
-		std::time_t t		    = std::time(nullptr);
+		std::time_t t				= std::time(nullptr);
 		Request::rdata->m_timestamp = *std::localtime(&t);
 	}	
 }
@@ -144,12 +145,12 @@ ManualRequest::ManualRequest() {
 // Prints appropriate error message in case rdata is uninitialized
 void ManualRequest::printRequestInfo() {
 	if (rdata != nullptr)
-		std::cout 	<< "* NEW MANUAL REQUEST: "
-				<< rdata->m_side 		<< ", "
-				<< rdata->m_instrument 		<< ", $"
-				<< rdata->m_price 		<< ", "
-				<< rdata->m_quantity 		<< ", "
-				<< getTimestamp() 		<< "\n";
+		std::cout << "* NEW MANUAL REQUEST: "
+		<< rdata->m_side << ", "
+		<< rdata->m_instrument << ", $"
+		<< rdata->m_price << ", "
+		<< rdata->m_quantity << ", "
+		<< getTimestamp() << "\n";
 	else std::cout << "Nothing to print!";
 }
 
@@ -209,6 +210,7 @@ void ManualRequest::init() {
 		//	RequestData memory and set the 'rdata' pointer to nullptr, and return.
 		//	Concequently the destructor won't deallocate again, so it's safe.
 	
+	
 	//*** Select trade side
 	std::cout << "Do you want to BUY or to SELL?\n";
 	std::cout << "1. BUY\t2. SELL\nYour choice: ";
@@ -246,6 +248,7 @@ void ManualRequest::init() {
 		std::cout << "Request Cancelled! Try again!\n";
 		return;
 	}
+
 
 	//*** Select trade instrument
 	std::cout << "Which instrument you want to trade?\n";

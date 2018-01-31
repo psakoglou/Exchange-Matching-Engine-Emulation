@@ -1,5 +1,5 @@
 /*
-*	Â© Superharmonic Technologies
+*	© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -71,11 +71,13 @@ int main() {
 	//*** Sort per price
 	// Lambda O(n^2) sorting as per highest price (for demo only)
 	auto myN2PriceSort = [&]()->void {
-		
+
 		std::size_t size = submitted.size();
+
 		if (size < 2) return;
 
 		unsigned i = 0;
+		
 		for (; i < size; ++i) {
 
 			double max_price = submitted[i]->getPrice();
@@ -117,12 +119,12 @@ int main() {
 	// Test 8: Create an auto request on the heap and print its info using the tuple
 	AutoRequest * auto_req3  = new AutoRequest("SELL", "GOOGL", 1000.43, 100);
 	
-	std::cout 	<< "\n\n*** AutoRequest with tuple:\n";
-	std::cout 	<< std::get<0>(auto_req3->getData()) << " "
-			<< std::get<1>(auto_req3->getData()) << " "
-			<< std::get<2>(auto_req3->getData()) << " "
-			<< std::get<3>(auto_req3->getData()) << " "
-			<< std::get<4>(auto_req3->getData()) << "\n\n\n";
+	std::cout << "\n\n*** AutoRequest with tuple:\n";
+	std::cout	<< std::get<0>(auto_req3->getData()) << " "
+				<< std::get<1>(auto_req3->getData()) << " "
+				<< std::get<2>(auto_req3->getData()) << " "
+				<< std::get<3>(auto_req3->getData()) << " "
+				<< std::get<4>(auto_req3->getData()) << "\n\n\n";
 
 	delete auto_req3;
 
@@ -137,10 +139,10 @@ int main() {
 
 	std::cout	<< "\nTest ii -- raw:\n";
 	std::cout	<< std::get<0>(r->getData())	<< " "
-			<< std::get<1>(r->getData())	<< " "
-			<< r->getPrice()		<< " "
-			<< r->getQuantity()		<< " "
-			<< r->getTimestamp()		<< "\n\n\n";
+				<< std::get<1>(r->getData())	<< " "
+				<< r->getPrice()				<< " "
+				<< r->getQuantity()				<< " "
+				<< r->getTimestamp()			<< "\n\n\n";
 	delete r;
 
 	r = new AutoRequest("SELL", "DIS", 155.43, 150);
@@ -149,10 +151,10 @@ int main() {
 
 	std::cout	<< "\nTest ii -- raw:\n";
 	std::cout	<< std::get<0>(r->getData())	<< " "
-			<< std::get<1>(r->getData())	<< " "
-			<< r->getPrice()		<< " "
-			<< r->getQuantity()		<< " "
-			<< r->getTimestamp()		<< "\n\n\n";
+				<< std::get<1>(r->getData())	<< " "
+				<< r->getPrice()				<< " "
+				<< r->getQuantity()				<< " "
+				<< r->getTimestamp()			<< "\n\n\n";
 	delete r;
 
 	r = new ManualRequest();
@@ -161,10 +163,10 @@ int main() {
 
 	std::cout	<< "\nTest ii -- raw:\n";
 	std::cout	<< std::get<0>(r->getData())	<< " "
-			<< std::get<1>(r->getData())	<< " "
-			<< r->getPrice()		<< " "
-			<< r->getQuantity()		<< " "
-			<< r->getTimestamp()		<< "\n\n";
+				<< std::get<1>(r->getData())	<< " "
+				<< r->getPrice()				<< " "
+				<< r->getQuantity()				<< " "
+				<< r->getTimestamp()			<< "\n\n";
 	delete r;
 
 	// Success!
