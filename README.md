@@ -35,3 +35,5 @@ Again, keep in mind that the objective of this system is to emulate a matching m
 Last but not least, notice that the copy constructor and assignment operator are set to be private. This ensures that no copies of a Trader object will be created anywhere in the program on runtime. This enhances security in the system cause we don't want replications of any trader account at all times. Every trader must be unique. 
 
 ![Data-Flow](/img/TraderUML.jpg)
+
+## TBD
