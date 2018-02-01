@@ -36,4 +36,16 @@ Last but not least, notice that the copy constructor and assignment operator are
 
 ![Data-Flow](/img/TraderUML.jpg)
 
+## TradeHeap interface
+
+The TradeHeap data structure implements a priority queue using a dynamic C-style primitive array and overloading the key functionality of a priority queue. This structure is an alternative implementation of STL's std::priority\_queue. The reason that it is build in native C++ instead is for demonstration reasons and further customization.
+
+The type of the priority queue TradeHeap -- which is a max heap, is the TradeNode data structure which models a trade request, namely the Request, the Trader, and the submission id timestamp i.e. the exact time a trade is submitted in the exchange. This timestamp is different from the timestamp of the Request creation. 
+
+The push() and pop() methods are inserting trades (TradeNode objects) in the heap in-order, defined as "the highest trade price is of higher priority. If two prices are the same, then an earlier trade has priority". 
+
+This data structure will be used by the matching engine which will querry the top elements of two trade queues, namely a BUY trading queue and a SELL trading queue. As a result, this data structure provides a constant time access interface (the pop() method) that contains all the necessary information for the matching engine. 
+
+![Data-Flow](/img/TradeHeapUML.jpg)
+
 ## TBD
