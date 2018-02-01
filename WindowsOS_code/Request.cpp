@@ -1,5 +1,5 @@
 /*
-*	© Superharmonic Technologies
+*	Â© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -95,13 +95,13 @@ AutoRequest::AutoRequest(std::string side, std::string instrument, double price,
 	
 	// Key data
 	Request::rdata->m_instrument	= instrument;
-	Request::rdata->m_quantity		= quantity;
-	Request::rdata->m_price			= price;
-	Request::rdata->m_side			= side;
+	Request::rdata->m_quantity	= quantity;
+	Request::rdata->m_price		= price;
+	Request::rdata->m_side		= side;
 	
 	// Timestamp
-	std::time_t t				= std::time(nullptr);
-	Request::rdata->m_timestamp = *std::localtime(&t);	
+	std::time_t t			= std::time(nullptr);
+	Request::rdata->m_timestamp 	= *std::localtime(&t);	
 }
 
 
@@ -143,8 +143,8 @@ ManualRequest::ManualRequest() {
 	// If no errors when init
 	if (Request::rdata != nullptr) {
 		// Timestamp
-		std::time_t t				= std::time(nullptr);
-		Request::rdata->m_timestamp = *std::localtime(&t);
+		std::time_t t			= std::time(nullptr);
+		Request::rdata->m_timestamp 	= *std::localtime(&t);
 	}	
 }
 
