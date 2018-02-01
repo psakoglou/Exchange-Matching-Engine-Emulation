@@ -48,8 +48,11 @@ public:
 	~Trader();
 
 	// Methods to execute trades
-	void buy(double price, long quantity);
-	void sell(double price, long quantity);
+	bool buy(double price, long quantity);
+	bool sell(double price, long quantity);
+
+	// Reimburse method in case a trade fails
+	void reimburse(double value);
 
 	// Auxiliary features
 	const std::vector<double> getMargins();

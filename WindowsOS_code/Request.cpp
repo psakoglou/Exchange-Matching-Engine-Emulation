@@ -58,6 +58,13 @@ const long Request::getQuantity() {
 	return 0;
 }
 
+// Quantity setter, in case a trade is not completely filled
+void Request::setQuantity(long new_quant) {
+	if (Request::rdata != nullptr)
+		Request::rdata->m_quantity = new_quant;
+}
+
+
 // Trade price request getter
 // Return 0.0 if an exception/error/cancellation occurs
 const double Request::getPrice() {

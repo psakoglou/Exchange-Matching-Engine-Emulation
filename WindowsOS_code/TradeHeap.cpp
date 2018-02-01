@@ -39,12 +39,14 @@ TradeHeap::~TradeHeap() {
 	delete[] m_trades;
 }
 
-
 //*** Auxiliary methods ***//
 
 // Operator[] allows us to access an element of the heap in O(1)
 // Used only for convenience and can be ignored
-const TradeNode& TradeHeap::operator[](unsigned index) {
+const TradeNode TradeHeap::operator[](unsigned index) {
+	if (index == 0)
+		return m_trades[0];
+
 	// In case of illegal input return the first element
 	if (index >= m_index || index >= m_size || index < 0) {
 		// Possibly throw here

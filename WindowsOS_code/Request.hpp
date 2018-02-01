@@ -58,6 +58,7 @@ public:
 	// C++11 version of typedef (alias)
 	using DataTuple = std::tuple<std::string, std::string, double, long, std::string>;
 
+	virtual void				setQuantity(long new_quant);
 	virtual void				printRequestInfo() = 0;
 	virtual const std::string	getInstrument();
 	virtual const std::string	getTimestamp();

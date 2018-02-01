@@ -43,11 +43,11 @@ bool Trader::canTrade() {
 }
 
 // Buy method that executes a trade
-void Trader::buy(double price, long quantity) {
+bool Trader::buy(double price, long quantity) {
 	// Check financial eligibility of trader
 	if (!canTrade()) {
 		std::cerr << "Trader with id: " << t_id << " cannot trade!\n";
-		return;
+		return false;
 	}
 
 	double trade_price = price * (double)quantity;
@@ -55,20 +55,21 @@ void Trader::buy(double price, long quantity) {
 	// Check financial eligibility of request (transaction)
 	if (trade_price > V) {
 		std::cerr << "Trader with id: " << t_id << " cannot perform this transaction!\n";
-		return;
+		return false;
 	}
 
 	// If all is legal, trade and log the trade
 	V -= trade_price;
 	portfolio_value.push_back(V);
+	return true;
 }
 
 // Sell method that executes a trade
-void Trader::sell(double price, long quantity) {
+bool Trader::sell(double price, long quantity) {
 	// Check financial eligibility of trader
 	if (!canTrade()) {
 		std::cerr << "Trader with id: " << t_id << " cannot trade!\n";
-		return;
+		return false;
 	}
 
 	double trade_price = price * (double)quantity;
@@ -76,12 +77,18 @@ void Trader::sell(double price, long quantity) {
 	// Check financial eligibility of request (transaction)
 	if (trade_price > V) {
 		std::cerr << "Trader with id: " << t_id << " cannot perform this transaction!\n";
-		return;
+		return false;
 	}
 
 	// If all is legal, trade and log the trade
 	V += trade_price;
 	portfolio_value.push_back(V);
+	return true;
+}
+
+// Reimburse method adds value to the trader's cash position
+void Trader::reimburse(double value) {
+	V += value;
 }
 
 // Getter method that returns the current portfolio value

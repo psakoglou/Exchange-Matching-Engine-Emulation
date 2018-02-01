@@ -73,7 +73,7 @@ public:
 	// an elementary bounds checking, but no exceptions are thrown
 	// A good idea is to extend the current system to report errors
 	// via an error handling component -- which can be added later
-	const TradeNode& operator[](unsigned index);
+	const TradeNode operator[](unsigned index);
 
 	// Auxiliary features for sanity check, to prevent errors, and for
 	// demo convenience and implementation of later components
