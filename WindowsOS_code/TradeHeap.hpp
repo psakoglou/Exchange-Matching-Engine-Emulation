@@ -1,5 +1,5 @@
 /*
-*	© Superharmonic Technologies
+*	Â© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -178,8 +178,8 @@ public:
 
 private:
 	// Private members
-	TradeNode*			m_trades;	// The heap (dynamic descending array)
-	std::size_t			m_size;		// Capacity of heap
+	TradeNode*		m_trades;	// The heap (dynamic descending array)
+	std::size_t		m_size;		// Capacity of heap
 	unsigned int		m_index;	// Index (number of elements)
 
 	static std::size_t	default_size;	// Default initial capacity for all heaps
