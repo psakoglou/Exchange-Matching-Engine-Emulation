@@ -1,5 +1,5 @@
 /*
-*	© Superharmonic Technologies
+*	Â© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -102,16 +102,3 @@ void TradeHeap::shrink() {
 	for (; i < m_index; ++i)
 		m_trades[i] = temp.m_trades[i];
 }
-
-/*TradeHeap& TradeHeap::operator=(const TradeHeap & th) {
-if (this != &th) {
-m_size = th.m_size;
-m_index = th.m_index;
-delete m_trades;
-m_trades = new TradeNode[m_size];
-unsigned i = 0;
-for (; i < m_index; ++i)
-m_trades[i] = th.m_trades[i];
-}
-return *this;
-}*/
