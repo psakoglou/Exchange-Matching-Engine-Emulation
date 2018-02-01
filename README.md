@@ -2,6 +2,8 @@
 
 This project implements an elementary version of a matching engine in a stock market exchange. It uses data structures and algorithms to describe an efficient system that handles asynchronous BUY and SELL requests from buyers and sellers for a pool of financial instruments (equity in this case). The system fills the requests or keeps them pending as per the availability, and keeps track of all transactions and their timestamp in the order book.
 
+**NOTICE:** The matching engine code is in WindowsOS\_code/Exchange.cpp (implementation) and WindowsOS\_code/Exchange.hpp (definition) files. The rest of the system components are supporting functionality for the engine to be implemented as realistic as possible.
+
 # System Overview
 
 The system consists of several components, shown below, and its purpose is to emulate an elementary and naive version of a Stock Exchange, with main focus on the matching engine, which handles new incoming trade requests. 
@@ -109,6 +111,10 @@ Sequential submission is required, thus we are using STL's mutual exclusion mech
 3) Not all components support multithreading right now. We can easily add mutex mechanisms everywhere, but currently there is some unecessary overhead due to lack of parallelization.
 
 4) The current code files work error-free in WindowsOS and with compilers that support C++11. Modifications needed to successfully build in Linux/UNIX OS
+
+5) The execution of trades is inaccurate and based on false assumptions. For simplicity reasons when there is price mismatch between the BUY side and SELL side traders, the current implementation for demo purposes performs the trade to an average price anyway. This is easy to fix but further details and trading definitions are needed. 
+
+6) Under no circumstances this is production level code. Although the implementation is as safe as possible and although all obvious vulnerabilities are properly handled by the system components, there are still security and performance issues. **This project is for demo only and emulates a Stock Exchange -- it doesn't implement it.**
 
 
 ## How to run
