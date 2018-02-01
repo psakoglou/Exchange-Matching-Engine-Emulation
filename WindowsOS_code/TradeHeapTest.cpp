@@ -1,5 +1,5 @@
 /*
-*	© Superharmonic Technologies
+*	Â© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -105,10 +105,10 @@ int main() {
 		auto request_tuple = top.request->getData();
 
 		std::cout	<< std::get<0>(request_tuple)	<< ", "
-					<< std::get<1>(request_tuple)	<< ", "
-					<< std::get<2>(request_tuple)	<< ", "
-					<< std::get<3>(request_tuple)	<< ", "
-					<< top.request->getTimestamp()	<< "\n";
+				<< std::get<1>(request_tuple)	<< ", "
+				<< std::get<2>(request_tuple)	<< ", "
+				<< std::get<3>(request_tuple)	<< ", "
+				<< top.request->getTimestamp()	<< "\n";
 	}
 		
 	if (top.trader != nullptr) {
