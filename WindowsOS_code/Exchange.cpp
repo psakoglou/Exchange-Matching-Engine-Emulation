@@ -97,8 +97,17 @@ void Exchange::matching_engine() {
 					double buy_price = buy_order.request->getPrice();
 					double sell_price = sell_order.request->getPrice();
 
-					// Get an average trade price
-					double average_trade_price = (buy_price + sell_price) / 2.0;
+					if (buy_price < sell_price)
+						continue;
+
+					double trade_price = 0.0;
+
+					if (buy_price > sell_price)
+						if (buy_order.submit_id < sell_order.submit_id)
+							trade_price = buy_price;
+						else
+							trade_price = sell_price;
+					
 
 					// Get quantities
 					long buy_quant = buy_order.request->getQuantity();
@@ -111,15 +120,15 @@ void Exchange::matching_engine() {
 					if (buy_quant >= sell_quant) {
 
 						// Attempt to perform the trade
-						buy_status = buy_order.trader->buy(average_trade_price, sell_quant);
-						sell_status = sell_order.trader->sell(average_trade_price, sell_quant);
+						buy_status = buy_order.trader->buy(trade_price, sell_quant);
+						sell_status = sell_order.trader->sell(trade_price, sell_quant);
 
 						// Reimburse the trader if the other doesn't fall through
 						if (buy_status == true && sell_status == false)
-							buy_order.trader->reimburse(average_trade_price * (double)sell_quant);
+							buy_order.trader->reimburse(trade_price * (double)sell_quant);
 
 						if (buy_status == false && sell_status == true)
-							sell_order.trader->reimburse(average_trade_price * (double)sell_quant);
+							sell_order.trader->reimburse(trade_price * (double)sell_quant);
 
 						// If trade is executed successfully
 						if (buy_status && sell_status) {
@@ -138,10 +147,10 @@ void Exchange::matching_engine() {
 							auto rd2 = seller.request->getData();
 
 							ss << "* Trader: " << buyer.trader->getId() << "\nORDER: " << std::get<0>(rd1)
-								<< ", " << std::get<1>(rd1) << ", $" << average_trade_price
+								<< ", " << std::get<1>(rd1) << ", $" << trade_price
 								<< ", " << std::get<3>(rd1) << ", " << std::get<4>(rd1)
 								<< "\n* Trader: " << seller.trader->getId() << "\nORDER: " << std::get<0>(rd2)
-								<< ", " << std::get<1>(rd2) << ", $" << average_trade_price
+								<< ", " << std::get<1>(rd2) << ", $" << trade_price
 								<< ", " << std::get<3>(rd2) << ", " << std::get<4>(rd2);
 							FillBook.push_back(ss.str());
 
@@ -155,15 +164,15 @@ void Exchange::matching_engine() {
 					if (buy_quant < sell_quant) {
 
 						// Attempt to perform the trade
-						buy_status = buy_order.trader->buy(average_trade_price, buy_quant);
-						sell_status = sell_order.trader->sell(average_trade_price, buy_quant);
+						buy_status = buy_order.trader->buy(trade_price, buy_quant);
+						sell_status = sell_order.trader->sell(trade_price, buy_quant);
 
 						// Reimburse the trader if the other doesn't fall through
 						if (buy_status == true && sell_status == false)
-							buy_order.trader->reimburse(average_trade_price * (double)buy_quant);
+							buy_order.trader->reimburse(trade_price * (double)buy_quant);
 
 						if (buy_status == false && sell_status == true)
-							sell_order.trader->reimburse(average_trade_price * (double)buy_quant);
+							sell_order.trader->reimburse(trade_price * (double)buy_quant);
 
 						// If trade is executed successfully
 						if (buy_status && sell_status) {
@@ -179,10 +188,10 @@ void Exchange::matching_engine() {
 							auto rd2 = seller.request->getData();
 
 							ss << "* Trader: " << buyer.trader->getId() << "\nORDER: " << std::get<0>(rd1)
-								<< ", " << std::get<1>(rd1) << ", $" << average_trade_price
+								<< ", " << std::get<1>(rd1) << ", $" << trade_price
 								<< ", " << std::get<3>(rd1) << ", " << std::get<4>(rd1)
 								<< "\n* Trader: " << seller.trader->getId() << "\nORDER: " << std::get<0>(rd2)
-								<< ", " << std::get<1>(rd2) << ", $" << average_trade_price
+								<< ", " << std::get<1>(rd2) << ", $" << trade_price
 								<< ", " << std::get<3>(rd2) << ", " << std::get<4>(rd2);
 							FillBook.push_back(ss.str());
 
