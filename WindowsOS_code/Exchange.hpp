@@ -1,5 +1,5 @@
 /*
-*	Â© Superharmonic Technologies
+*	© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -76,6 +76,13 @@ public:
 	// Returns the Fill book
 	const std::vector<std::string> getFillBook();
 
+	// Edit trade
+	void edit_trade_price(Trader * t, Request * r, std::string side, std::string instrument, double new_price);
+	void edit_trade_quantity(Trader * t, Request * r, std::string side, std::string instrument, long quantity);
+
+	// Delete trade
+	void delete_trade(Trader * t, Request * r, std::string side, std::string instrument);
+
 	// Submit trade method. This method takes a TradeNode object reference cause
 	// we want the traders' accounts to be updated after a trade is executed by the matchine engine.
 	// It implements elementary mutex mechanisms to hedge against multiple requests, 
@@ -108,7 +115,7 @@ public:
 		if (side == "BUY") {
 			m_exchange[m_index].buy_heap.push(tn);
 			m_exchange[m_index].available	= true;
-			m_exchange[m_index].stock	= input_stock;
+			m_exchange[m_index].stock		= input_stock;
 			updateOrderBook(tn);
 			lock.unlock();
 			cv.notify_all();
@@ -119,7 +126,7 @@ public:
 		if (side == "SELL") {
 			m_exchange[m_index].sell_heap.push(tn);
 			m_exchange[m_index].available	= true;
-			m_exchange[m_index].stock	= input_stock;
+			m_exchange[m_index].stock		= input_stock;
 			updateOrderBook(tn);
 			lock.unlock();
 			cv.notify_all();
@@ -134,16 +141,16 @@ public:
 
 private:
 	// Model a hash table using a dynamic array and an elementary hash function
-	ExchangeNode*					m_exchange;
-	std::size_t					m_size;
-	unsigned int					m_index;
+	ExchangeNode*								m_exchange;
+	std::size_t									m_size;
+	unsigned int								m_index;
 	std::function<std::size_t(std::string)>		hash;
-	std::set<std::string>				Stocks = { "GOOGL", "BABA", "AMZN", "TSLA", "DIS" };
+	std::set<std::string>						Stocks = { "GOOGL", "BABA", "AMZN", "TSLA", "DIS" };
 
 	// Threading shield
-	std::mutex			mt;
+	std::mutex					mt;
 	std::condition_variable		cv;
-	std::thread			ignite;
+	std::thread					ignite;
 
 	// Matching Engine stuff
 	bool exchange_open;

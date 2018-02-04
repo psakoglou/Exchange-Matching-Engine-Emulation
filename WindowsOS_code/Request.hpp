@@ -1,5 +1,5 @@
 /*
-*	Â© Superharmonic Technologies
+*	© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -30,11 +30,12 @@
 // This struct will be encapsulated below as well. Only used for convenience
 // and intuitive structuring of the parameters
 struct RequestData {
-	std::tm		m_timestamp;		// Timestamp of Request creation
-	std::string 	m_instrument;		// Underlying Instrument
-	std::string 	m_side;			// Trade side (BUY/SELL)
+	std::tm		m_timestamp;	// Timestamp of Request creation
+	std::string m_instrument;	// Underlying Instrument
+	std::string m_side;			// Trade side (BUY/SELL)
 	long		m_quantity;		// Trade quantity
 	double		m_price;		// Trade price
+	std::string m_id;			// Request id
 };
 
 //=========================================================================================
@@ -58,15 +59,19 @@ public:
 	// C++11 version of typedef (alias)
 	using DataTuple = std::tuple<std::string, std::string, double, long, std::string>;
 
-	virtual void			setQuantity(long new_quant);
-	virtual void			printRequestInfo() = 0;
+	// Setters
+	virtual void				setQuantity(long new_quant);
+	virtual void				setPrice(double new_price);
+
+	// Getters
+	virtual void				printRequestInfo() = 0;
 	virtual const std::string	getInstrument();
 	virtual const std::string	getTimestamp();
-	virtual const long		getQuantity();
+	virtual const long			getQuantity();
 	virtual const double		getPrice();
 	virtual const std::string	getSide();	
 	virtual const DataTuple		getData();
-
+	virtual const std::string	getId();
 protected:
 	RequestData * rdata;
 private:

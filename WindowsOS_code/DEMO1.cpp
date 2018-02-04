@@ -45,33 +45,33 @@ int main() {
 
 	// Traders are submitting their trades asynchronously
 
-	
+
 	// Scenario 1
 	// ==========
 
-		// Trader 1: BUY GOOGL $10 10 Request -> current V = $1200, after filling V = $1100
-		std::thread submission1(&Exchange::submit_trade, &NYSE, TradeNode(t1, r1));
+	// Trader 1: BUY GOOGL $10 10 Request -> current V = $1200, after filling V = $1100
+	std::thread submission1(&Exchange::submit_trade, &NYSE, TradeNode(t1, r1));
 
-			/* Now GOOGL is available */
+	/* Now GOOGL is available */
 
-		// Trader 2: SELL GOOGL $10 10 Request -> current V = $1200, after filling V = $1300
-		std::thread submission2(&Exchange::submit_trade, &NYSE, TradeNode(t2, r2));
+	// Trader 2: SELL GOOGL $10 10 Request -> current V = $1200, after filling V = $1300
+	std::thread submission2(&Exchange::submit_trade, &NYSE, TradeNode(t2, r2));
 
-			/* After executing, GOOGL is anavailable */
+	/* After executing, GOOGL is anavailable */
 
-	
+
 	// Scenario 2
 	// ==========
 
-		// Trader 3: BUY AMZN $100 10 -> current V = $10,000, after filling V = $9,000
-		std::thread submission3(&Exchange::submit_trade, &NYSE, TradeNode(t3, r3));
+	// Trader 3: BUY AMZN $100 10 -> current V = $10,000, after filling V = $9,000
+	std::thread submission3(&Exchange::submit_trade, &NYSE, TradeNode(t3, r3));
 
-			/* Now AMZN is available */
+	/* Now AMZN is available */
 
-		// Trader 4: SELL AMZN $20 20 -> current V = $10,000, after filling V = $10,400
-		std::thread submission4(&Exchange::submit_trade, &NYSE, TradeNode(t4, r4));
+	// Trader 4: SELL AMZN $20 20 -> current V = $10,000, after filling V = $10,400
+	std::thread submission4(&Exchange::submit_trade, &NYSE, TradeNode(t4, r4));
 
-			/* There are still 10 AMZN Stocks available at $20 */
+	/* There are still 10 AMZN Stocks available at $20 */
 
 
 	// Scenario 3
@@ -80,14 +80,14 @@ int main() {
 	// Trader 4: BUY DIS $20 100 -> current V = $100,000, after filling V = $98,000
 	std::thread submission5(&Exchange::submit_trade, &NYSE, TradeNode(t5, r5));
 
-		/* Now DIS is available */
+	/* Now DIS is available */
 
 	// Trader 5: SELL BABA $20 20 -> current V = $100,000 after filling V = $100,400
 	std::thread submission6(&Exchange::submit_trade, &NYSE, TradeNode(t6, r6));
 
-		/* DIS and BABA are available*/
+	/* DIS and BABA are available*/
 
-	
+
 	// Make sure the orders have been submitted
 	submission1.join();
 	submission2.join();
@@ -96,6 +96,15 @@ int main() {
 	submission5.join();
 	submission6.join();
 
+	// Delete the last two trades
+	NYSE.delete_trade(t6, r6, "SELL", "BABA");
+	NYSE.delete_trade(t5, r5, "BUY", "DIS");
+
+	// Only AMZN is available now
+
+	// Edit the existing AMZN order to ask for $1000
+	NYSE.edit_trade_price(t4, r4, "SELL", "AMZN", 1000);
+	
 	// Check remaining available trades
 	std::cout << "\n***\n";
 	std::cout << "After some requests, the available stocks are:\n";
@@ -123,7 +132,7 @@ int main() {
 	std::cout << "Trader 1: ";	// Bought $10x10 = 100 from Trader 2 -> Original V = $1100, Final V = $1100
 	t1->info();
 	std::cout << "\n\n";
-	
+
 	std::cout << "Trader 2: ";	// Sold $10x10 = 100 to Trader 1 -> Original V = $1100, Final V = $1300
 	t2->info();
 	std::cout << "\n\n";
@@ -149,6 +158,7 @@ int main() {
 	std::cout << "\n\n";
 
 	// Success!
+	
 
 	// Reclaim all memory
 	delete t1; delete t2; delete t3; delete t4; delete t5; delete t6;

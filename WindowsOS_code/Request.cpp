@@ -1,5 +1,5 @@
 /*
-*	Â© Superharmonic Technologies
+*	© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -9,6 +9,8 @@
 */
 
 #include "Request.hpp"
+#include <chrono>
+#include <random>
 
 //*** Request base class implementation ***//
 
@@ -58,13 +60,6 @@ const long Request::getQuantity() {
 	return 0;
 }
 
-// Quantity setter, in case a trade is not completely filled
-void Request::setQuantity(long new_quant) {
-	if (Request::rdata != nullptr)
-		Request::rdata->m_quantity = new_quant;
-}
-
-
 // Trade price request getter
 // Return 0.0 if an exception/error/cancellation occurs
 const double Request::getPrice() {
@@ -81,6 +76,29 @@ const Request::DataTuple Request::getData() {
 	return std::make_tuple("NULL", "NULL", 0.0, 0, "NULL");
 }
 
+
+const std::string Request::getId() {
+	if (Request::rdata != nullptr)
+		return Request::rdata->m_id;
+	else return "NULL";
+}
+
+//*** Modifier methods ***//
+
+// Quantity setter, in case a trade is not completely filled
+void Request::setQuantity(long new_quant) {
+	if (Request::rdata != nullptr) 
+		Request::rdata->m_quantity = new_quant;
+}
+
+// Price setter
+void Request::setPrice(double new_price) {
+	if (Request::rdata != nullptr) 
+		Request::rdata->m_price = new_price;
+	
+}
+
+
 // Notice!!! 
 // The print function will be overriden below, while the above getters will be inherited 
 
@@ -95,13 +113,22 @@ AutoRequest::AutoRequest(std::string side, std::string instrument, double price,
 	
 	// Key data
 	Request::rdata->m_instrument	= instrument;
-	Request::rdata->m_quantity	= quantity;
-	Request::rdata->m_price		= price;
-	Request::rdata->m_side		= side;
+	Request::rdata->m_quantity		= quantity;
+	Request::rdata->m_price			= price;
+	Request::rdata->m_side			= side;
 	
 	// Timestamp
-	std::time_t t			= std::time(nullptr);
-	Request::rdata->m_timestamp 	= *std::localtime(&t);	
+	std::time_t t				= std::time(nullptr);
+	Request::rdata->m_timestamp = *std::localtime(&t);	
+
+	std::uniform_int<int> dist(0, 1);
+	std::mt19937 eng;
+	unsigned i = 0;
+	for (; i < 8; ++i) {
+		// Generate pure randomness as per the system clock in every iteration
+		eng.seed(std::chrono::system_clock::now().time_since_epoch().count());
+		rdata->m_id += std::to_string(dist(eng));
+	}
 }
 
 
@@ -143,9 +170,18 @@ ManualRequest::ManualRequest() {
 	// If no errors when init
 	if (Request::rdata != nullptr) {
 		// Timestamp
-		std::time_t t			= std::time(nullptr);
-		Request::rdata->m_timestamp 	= *std::localtime(&t);
+		std::time_t t				= std::time(nullptr);
+		Request::rdata->m_timestamp = *std::localtime(&t);
 	}	
+
+	std::uniform_int<int> dist(0, 1);
+	std::mt19937 eng;
+	unsigned i = 0;
+	for (; i < 8; ++i) {
+		// Generate pure randomness as per the system clock in every iteration
+		eng.seed(std::chrono::system_clock::now().time_since_epoch().count());
+		rdata->m_id += std::to_string(dist(eng));
+	}
 }
 
 // Print method for a trade request

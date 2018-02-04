@@ -9,7 +9,7 @@
 *
 */
 
-// Necessary libraries
+ // Necessary libraries
 #include <iostream>
 #include "Exchange.hpp"
 

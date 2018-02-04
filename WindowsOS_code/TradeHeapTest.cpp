@@ -1,5 +1,5 @@
 /*
-*	Â© Superharmonic Technologies
+*	© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -23,7 +23,7 @@ int main() {
 
 	theap1.print(); // Nothing will be printed
 
-	std::cout << "Capacity: " << theap1.size() << "\n";
+	std::cout << "Number of elements: " << theap1.size() << "\n";
 	std::cout << "Is heap empty? " << std::boolalpha << theap1.empty() << "\n\n\n";
 
 	// Success!
@@ -35,7 +35,7 @@ int main() {
 
 	theap2->print(); // Nothing will be printed
 
-	std::cout << "Capacity: " << theap2->size() << "\n";
+	std::cout << "Number of elements: " << theap2->size() << "\n";
 	std::cout << "Is heap empty? " << std::boolalpha << theap2->empty() << "\n\n\n";
 	delete theap2;
 
@@ -70,13 +70,13 @@ int main() {
 	// Elements in correct order!
 
 	// Remove elements
-	std::cout << "Current heap capacity: " << theap3.size() << "\n";
+	std::cout << "Number of elements: " << theap3.size() << "\n";
 	while (!theap3.empty()) {
 		theap3.pop();
 		std::cout << "\nElement Removed!";
 	}
 	std::cout << "\n";
-	std::cout << "Current heap capacity: " << theap3.size() << "\n";
+	std::cout << "Number of elements: " << theap3.size() << "\n";
 	std::cout << "Is heap empty? " << theap3.empty() << "\n\n\n";
 
 	// Success! No heap resize for a small number of elements
@@ -94,7 +94,7 @@ int main() {
 		else
 			theap3.push(trade2);
 
-		std::cout << "Element added! Capacity: " << theap3.size() << "\n";
+		std::cout << "Element added! Number of elements: " << theap3.size() << "\n";
 	}
 		
 	// Get top element
@@ -105,10 +105,10 @@ int main() {
 		auto request_tuple = top.request->getData();
 
 		std::cout	<< std::get<0>(request_tuple)	<< ", "
-				<< std::get<1>(request_tuple)	<< ", "
-				<< std::get<2>(request_tuple)	<< ", "
-				<< std::get<3>(request_tuple)	<< ", "
-				<< top.request->getTimestamp()	<< "\n";
+					<< std::get<1>(request_tuple)	<< ", "
+					<< std::get<2>(request_tuple)	<< ", "
+					<< std::get<3>(request_tuple)	<< ", "
+					<< top.request->getTimestamp()	<< "\n";
 	}
 		
 	if (top.trader != nullptr) {

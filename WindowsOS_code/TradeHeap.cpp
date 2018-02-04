@@ -1,5 +1,5 @@
 /*
-*	Â© Superharmonic Technologies
+*	© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -66,9 +66,9 @@ void TradeHeap::print() {
 	}
 }
 
-// Getter method for the current capacity of the heap
+// Getter method for the number of elements in the heap
 const std::size_t TradeHeap::size() {
-	return m_size;
+	return m_index;
 }
 
 // Boolean method to check whether or not the heap is empty
@@ -101,4 +101,46 @@ void TradeHeap::shrink() {
 	unsigned i = 0;
 	for (; i < m_index; ++i)
 		m_trades[i] = temp.m_trades[i];
+}
+
+// Re-sort method for modified contents
+void TradeHeap::sort() {
+	if (m_index < 2)
+		return;
+	
+	unsigned i = 0;
+	for (; i < m_index; ++i) {
+
+		double max_price = m_trades[i].request->getPrice();
+		unsigned max_index = i;
+
+		unsigned j = i + 1;
+		for (; j < m_index; ++j) {
+
+			if (m_trades[i].request->getPrice() == m_trades[j].request->getPrice())
+				continue;
+
+			if (m_trades[i].request->getPrice() < m_trades[j].request->getPrice()) {
+				max_price = m_trades[j].request->getPrice();
+				max_index = j;
+			}
+		}
+		std::swap(m_trades[i], m_trades[max_index]);
+	}
+}
+
+// Method to remove a particular trader's request from the heap
+void TradeHeap::remove(Trader * t, Request * r) {
+	if (m_index == 0)
+		return;
+
+	unsigned i = 0;
+	for (; i < m_index; ++i) {
+		if (m_trades[i].trader->getId() == t->getId() && m_trades[i].request->getId() == r->getId()) {
+			break;
+		}
+	}
+	std::swap(m_trades[i], m_trades[m_index - 1]);
+	--m_index;
+	sort();
 }

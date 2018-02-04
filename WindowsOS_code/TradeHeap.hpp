@@ -1,5 +1,5 @@
 /*
-*	Â© Superharmonic Technologies
+*	© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -77,9 +77,11 @@ public:
 
 	// Auxiliary features for sanity check, to prevent errors, and for
 	// demo convenience and implementation of later components
-	const std::size_t size();	// Returns the current capacity of the heap
-	void print();				// Iterates and prints in-order the elements
-	bool empty();				// Checks if the heap is empty
+	void remove(Trader * t, Request * r);	// Remove a request from the heap
+	const std::size_t size();				// Returns the number of elements in the heap
+	void print();							// Iterates and prints in-order the elements
+	bool empty();							// Checks if the heap is empty
+	void sort();							// Sort node after modification
 	
 	// Inline pop() method that returns the element at the head of the heap 
 	// This is the equivalent method of EXTRACT-MAX() 
@@ -178,8 +180,8 @@ public:
 
 private:
 	// Private members
-	TradeNode*		m_trades;	// The heap (dynamic descending array)
-	std::size_t		m_size;		// Capacity of heap
+	TradeNode*			m_trades;	// The heap (dynamic descending array)
+	std::size_t			m_size;		// Capacity of heap
 	unsigned int		m_index;	// Index (number of elements)
 
 	static std::size_t	default_size;	// Default initial capacity for all heaps

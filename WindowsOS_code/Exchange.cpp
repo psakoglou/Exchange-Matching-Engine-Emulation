@@ -136,6 +136,7 @@ void Exchange::matching_engine() {
 							// Remove the trades
 							auto buyer = m_exchange[i].buy_heap[0];
 							buyer.request->setQuantity(buy_quant - sell_quant);
+
 							if (buyer.request->getQuantity() == 0)
 								m_exchange[i].buy_heap.pop();
 
@@ -181,6 +182,9 @@ void Exchange::matching_engine() {
 							auto buyer = m_exchange[i].buy_heap.pop();
 							auto seller = m_exchange[i].sell_heap[0];
 							seller.request->setQuantity(sell_quant - buy_quant);
+
+							if (seller.request->getQuantity() == 0)
+								m_exchange[i].sell_heap.pop();
 
 							// Update the Fill book
 							std::stringstream ss;
@@ -247,4 +251,128 @@ const std::vector<std::string> Exchange::getFillBook() {
 	return FillBook;
 }
 
+//*** Modifiers ***//
 
+// Editing an existing trade -- change the price
+void Exchange::edit_trade_price(Trader * t, Request * r, std::string side, std::string instrument, double new_price) {
+	unsigned i = hash(instrument);
+	if (!(i >= 0 && i <= 4))
+		return;
+
+	if (side == "BUY") {
+		unsigned j = 0;
+		while (j < m_exchange[i].buy_heap.size()) {
+			if (t->getId() == m_exchange[i].buy_heap[j].trader->getId() && r->getId() == m_exchange[i].buy_heap[j].request->getId()) {
+				m_exchange[i].buy_heap[j].request->setPrice(new_price);
+				m_exchange[i].buy_heap.sort();
+				return;
+			}
+			++j;
+		}
+		if (j == m_exchange[i].buy_heap.size())
+			return;
+	}
+	
+
+	if (side == "SELL") {
+		unsigned j = 0;
+		while (j < m_exchange[i].sell_heap.size()) {
+			if (t->getId() == m_exchange[i].sell_heap[j].trader->getId() && r->getId() == m_exchange[i].sell_heap[j].request->getId()) {
+				m_exchange[i].sell_heap[j].request->setPrice(new_price);
+				m_exchange[i].sell_heap.sort();
+				return;
+			}
+			++j;
+		}
+		if (j == m_exchange[i].sell_heap.size())
+			return;
+	}
+	return;
+}
+
+// Editing an existing trade -- change the quantity
+void Exchange::edit_trade_quantity(Trader * t, Request * r, std::string side, std::string instrument, long new_quantity) {
+	unsigned i = hash(instrument);
+	if (!(i >= 0 && i <= 4))
+		return;
+
+	if (side == "BUY") {
+		unsigned j = 0;
+		while (j < m_exchange[i].buy_heap.size()) {
+			if (t->getId() == m_exchange[i].buy_heap[j].trader->getId() && r->getId() == m_exchange[i].buy_heap[j].request->getId()) {
+				if (new_quantity < m_exchange[i].buy_heap[j].request->getQuantity()) {
+					m_exchange[i].buy_heap[j].request->setQuantity(new_quantity);
+					m_exchange[i].buy_heap.sort();
+					return;
+				} 
+				else {
+					m_exchange[i].buy_heap[j].request->setQuantity(new_quantity);
+					return;
+				}
+			}
+			++j;
+		}
+		if (j == m_exchange[i].buy_heap.size())
+			return;
+	}
+
+
+	if (side == "SELL") {
+		unsigned j = 0;
+		while (j < m_exchange[i].sell_heap.size()) {
+			if (t->getId() == m_exchange[i].sell_heap[j].trader->getId() && r->getId() == m_exchange[i].sell_heap[j].request->getId()) {
+				if (new_quantity < m_exchange[i].sell_heap[j].request->getQuantity()) {
+					m_exchange[i].sell_heap[j].request->setQuantity(new_quantity);
+					m_exchange[i].sell_heap.sort();
+					return;
+				}
+				else {
+					m_exchange[i].sell_heap[j].request->setQuantity(new_quantity);
+					return;
+				}
+			}
+			++j;
+		}
+		if (j == m_exchange[i].sell_heap.size())
+			return;
+	}
+	return;
+}
+
+// Deleting an existing trade
+void Exchange::delete_trade(Trader * t, Request * r, std::string side, std::string instrument) {
+	unsigned i = hash(instrument);
+	if (!(i >= 0 && i <= 4))
+		return;
+
+	if (side == "BUY") {
+		unsigned j = 0;
+		while (j < m_exchange[i].buy_heap.size()) {
+			if (t->getId() == m_exchange[i].buy_heap[j].trader->getId() && r->getId() == m_exchange[i].buy_heap[j].request->getId()) {
+				m_exchange[i].buy_heap.remove(t, r);
+				if (m_exchange[i].buy_heap.empty() && m_exchange[i].sell_heap.empty())
+					m_exchange[i].available = false;
+				return;
+			}
+			++j;
+		}
+		if (j == m_exchange[i].buy_heap.size())
+			return;
+	}
+
+	if (side == "SELL") {
+		unsigned j = 0;
+		while (j < m_exchange[i].sell_heap.size()) {
+			if (t->getId() == m_exchange[i].sell_heap[j].trader->getId() && r->getId() == m_exchange[i].sell_heap[j].request->getId()) {
+				m_exchange[i].sell_heap.remove(t, r);
+				if (m_exchange[i].buy_heap.empty() && m_exchange[i].sell_heap.empty())
+					m_exchange[i].available = false;
+				return;
+			}
+			++j;
+		}
+		if (j == m_exchange[i].sell_heap.size())
+			return;
+	}
+	return;
+}
