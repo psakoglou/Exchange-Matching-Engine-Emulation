@@ -131,6 +131,3 @@ You can get CodeBlocks and installation instructions here: https://www.ntu.edu.s
 2) Windows command line
 
 Instructions can be found here: https://www.youtube.com/watch?v=SvEPC3d85ZA
-
-
-
