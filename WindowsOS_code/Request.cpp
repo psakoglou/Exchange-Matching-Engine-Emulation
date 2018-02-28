@@ -1,5 +1,5 @@
 /*
-*	© Superharmonic Technologies
+*	Â© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
 *  ================================================
@@ -97,7 +97,6 @@ void Request::setPrice(double new_price) {
 		Request::rdata->m_price = new_price;
 	
 }
-
 
 // Notice!!! 
 // The print function will be overriden below, while the above getters will be inherited 
