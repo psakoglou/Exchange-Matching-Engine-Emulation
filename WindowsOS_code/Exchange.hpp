@@ -1,8 +1,8 @@
 /*
-*	© Superharmonic Technologies
+*	Â© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
-*  ================================================
+*  ===============================================
 *
 *	Exchange class definition
 *
