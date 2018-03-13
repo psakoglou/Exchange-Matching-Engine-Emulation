@@ -1,8 +1,8 @@
 /*
-*	© Superharmonic Technologies
+*	Â© Superharmonic Technologies
 *	Pavlos Sakoglou
 *
-*  ================================================
+*  =================================================================
 *
 *	Stock Exchange Matching Engine Demo 1:
 *		Stress Testing with high volume async requests
