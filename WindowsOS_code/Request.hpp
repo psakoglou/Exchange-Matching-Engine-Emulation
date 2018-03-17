@@ -30,8 +30,8 @@
 // This struct will be encapsulated below as well. Only used for convenience
 // and intuitive structuring of the parameters
 struct RequestData {
-	std::tm		m_timestamp;	// Timestamp of Request creation
-	std::string m_instrument;	// Underlying Instrument
+	std::tm		m_timestamp;		// Timestamp of Request creation
+	std::string m_instrument;		// Underlying Instrument
 	std::string m_side;			// Trade side (BUY/SELL)
 	long		m_quantity;		// Trade quantity
 	double		m_price;		// Trade price
